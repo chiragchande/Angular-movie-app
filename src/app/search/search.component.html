@@ -1,0 +1,30 @@
+<div class="search-view">
+  <form [formGroup]="searchForm" (ngSubmit)="submit()">
+    <mat-form-field class="fill">
+      <mat-label>Search movie by title</mat-label>
+      <input matInput placeholder="Title" formControlName="search">
+      <button mat-icon-button matSuffix [attr.aria-label]="'Search movie'" [attr.aria-pressed]="searched">
+      <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <ng-container *ngIf="(viewStatus$ | async) as viewStatus">
+    <div *ngIf="viewStatus === ViewStatus.Loading">
+      loading...
+    </div>
+    <ng-container *ngIf="(movies$ | async) as movies">
+      <app-movies-view
+        *ngIf="viewStatus === ViewStatus.Loaded"
+        [error]="error"
+        [errorMessage]="errorMessage"
+        [movies]="movies"
+        [showPreviousNext]="true"
+        [options]="options"
+      ></app-movies-view>
+    </ng-container>
+    
+
+  </ng-container>
+</div>
+
+
